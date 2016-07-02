@@ -3,6 +3,8 @@ package controllers
 import javax.inject._
 import play.api._
 import play.api.mvc._
+import slick.driver.PostgresDriver.simple._
+import models._
 
 /**
  * This controller creates an `Action` to handle HTTP requests to the
@@ -18,7 +20,8 @@ class HomeController @Inject() extends Controller {
    * a path of `/`.
    */
   def index = Action {
-      Ok(views.html.index("Kek lol aazazaza"))
+
+      Ok(views.html.index(Facultees.getAll.toString()))
   }
 
 }

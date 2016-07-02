@@ -1,25 +1,27 @@
 package models
-import java.util.UUID
 
-import scala.slick.lifted.ForeignKeyQuery
+import play.api.Play.current
+import play.api.db.DB
+
 import slick.driver.PostgresDriver.simple._
 
-case class Applicant(id:UUID, name:String, surname:String, password:String,
-                     zno_ukr:Int, zno_math:Int, zno_3rd_id:UUID, zno_3rd_points:Int, attestate:Int,
-                     facultee_id:UUID, point_sum:Int, status:Boolean)
 
-class Applicants(tag: Tag) extends Table[Applicant](tag, "Applicants") {
+case class Applicant(id:Int, name:String, surname:String, password:String,
+                     zno_ukr:Int, zno_math:Int, zno_3rd_id:Int, zno_3rd_points:Int, attestate:Int,
+                     facultee_id:Int, point_sum:Int, status:Boolean)
 
-    def id = column[UUID]("id", O.PrimaryKey)
+class Applicants(tag: Tag) extends Table[Applicant](tag, "applicants") {
+
+    def id = column[Int]("id", O.PrimaryKey)
     def name = column[String]("name")
     def surname = column[String]("surname")
     def password = column[String]("password")
     def zno_ukr = column[Int]("zno_ukr")
     def zno_math = column[Int]("zno_math")
-    def zno_3rd_id = column[UUID]("zno_3rd_id")
+    def zno_3rd_id = column[Int]("zno_3rd_id")
     def zno_3rd_points = column[Int]("zno_3rd_points")
     def attestate = column[Int]("attestate")
-    def facultee_id = column[UUID]("facultee_id")
+    def facultee_id = column[Int]("facultee_id")
     def point_sum = column[Int]("point_sum")
     def status = column[Boolean]("status")
 
@@ -33,4 +35,14 @@ class Applicants(tag: Tag) extends Table[Applicant](tag, "Applicants") {
 }
 object Applicants{
     val applicants = TableQuery[Applicants]
+
+    def getAll: List[Applicant] = {
+        Database.forDataSource(DB.getDataSource()) withSession { implicit session =>
+            applicants.list
+        }
+    }
+
+    def getInfo = {
+        val kek = applicants.filter{_.status === true}
+    }
 }
