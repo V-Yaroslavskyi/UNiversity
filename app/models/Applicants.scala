@@ -95,12 +95,37 @@ object Applicants {
 
     val dbConfig = Database.forConfig("mydb")
 
+    def enroll: Unit ={
+        Database.forConfig("mydb") withSession { implicit session =>
+            applicants.map(a => a.status).update(Some(false))
+
+            for (f <- Facultees.facultees){
+                val id = f.id
+                val quote = f.quote
+                val tab = applicants.filter(_.facultee_id === id).
+                    map(a => (a.zno_3rd_points + a.zno_math + a.zno_ukr + a.attestate, a.status)).sortBy(_._1.desc).
+                    take(quote).map(a => a._2)
+                tab.update(Some(true))
+
+            }
+
+        }
+    }
 
     def addApplicant(newApp:Applicant):Unit = {
         Database.forConfig("mydb") withSession { implicit session =>
 
             applicants += newApp
 
+        }
+    }
+
+    def appFac = {
+        Database.forConfig("mydb") withSession { implicit session =>
+            for {a <- applicants.list
+                 f <- Facultees.facultees.list if a.facultee_id == f.id
+                 d <- Disciplines.disciplines.list if a.zno_3rd_id == d.id}
+                yield (a, f.name, d.name)
         }
     }
 
