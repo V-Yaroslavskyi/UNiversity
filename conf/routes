@@ -19,3 +19,9 @@ GET     /register                   controllers.HomeController.register
 POST    /registerHandler            controllers.HomeController.registrationHandler
 
 POST    /loginHandler               controllers.HomeController.loginHandler
+
+POST    /adminAuth                   controllers.HomeController.adminAuth
+
+GET    /admin                       controllers.HomeController.adminIndex
+
+GET    /enroll                      controllers.HomeController.enroll

@@ -1,0 +1,45 @@
+@(appl: List[(Applicant, String, String)])
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Панель адміністратора</title>
+</head>
+<body>
+    <p class="login button">
+        <a href="/enroll"> Провести зарахування </a>
+    </p>
+
+    <table border="1">
+        <tr>
+            <td>Ім'я</td>
+            <td>Призвіще</td>
+            <td>Пароль</td>
+            <td>Укр. мова</td>
+            <td>Математика</td>
+            <td>Третій предмет</td>
+            <td>Результат</td>
+            <td>Атестат</td>
+            <td>Факультет</td>
+            <td>Статус</td>
+        </tr>
+
+        @for((a, f, z) <- appl) {
+
+        <tr>
+            <td>@a.name</td>
+            <td>@a.surname</td>
+            <td>@a.password</td>
+            <td>@a.zno_ukr</td>
+            <td>@a.zno_math</td>
+            <td>@z</td>
+            <td>@a.zno_3rd_points</td>
+            <td>@a.attestate</td>
+            <td>@f</td>
+            <td>@(if (a.status.isDefined) {if (a.status.get) "Пройшов" else "Не пройшов"})</td>
+        </tr>
+    }
+    </table>
+</body>
+</html>

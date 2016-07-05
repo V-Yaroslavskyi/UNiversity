@@ -9,6 +9,34 @@ import models._
 @Singleton
 class HomeController @Inject() extends Controller {
 
+    def enroll = Action{
+        Applicants.enroll
+        Redirect(routes.HomeController.adminAuth())
+    }
+
+    def adminIndex = Action{
+        Ok(views.html.admin())
+    }
+
+    def adminAuth = Action{
+        implicit request =>
+            adminForm.form.bindFromRequest.fold(
+                formWithErrors => {
+
+                    BadRequest(views.html.error("formWithErrors"))
+                },
+                adminData => {
+                    val user = Admins.findApplicant(adminData)
+                    if (user.isEmpty){
+                        Ok(views.html.error("Користувача з таким іменем/паролем не існує"))
+                    }
+                    else{
+                        Ok(views.html.adminPanel(Applicants.appFac))
+                    }
+                }
+            )
+
+    }
 
     def index = Action {
         Redirect(routes.HomeController.login())
