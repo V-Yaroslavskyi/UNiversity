@@ -1,4 +1,4 @@
-
+@(user: Applicant, facultee: Facultee)
 <!DOCTYPE html>
 
 <!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
@@ -33,11 +33,11 @@
 
                             <h1> Особистий кабінет </h1>
 
-                            <p>Призвіще:  &thinsp;{{ surname }} </p>
-                            <p>Ім'я:      &thinsp;{{ name }}</p>
-                            <p>Факультет: &thinsp;{{ fac }}</p>
-                            <p>Сума балів:&thinsp;{{ sum }}</p>
-                            <p>Статус:    &thinsp;{{ passed }}</p>
+                            <p>Призвіще:   @user.surname </p>
+                            <p>Ім'я:       @user.name</p>
+                            <p>Факультет:  @facultee.name </p>
+                            <p>Сума балів: @(user.zno_ukr + user.zno_math + user.zno_3rd_points + user.attestate)</p>
+                            <p>Статус:     @(if (user.status.isDefined) {if (user.status.get) "Пройшов" else "Не пройшов"}) </p>
 
                         </div>
 

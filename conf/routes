@@ -16,3 +16,6 @@ GET     /login                      controllers.HomeController.login
 
 GET     /register                   controllers.HomeController.register
 
+POST    /registerHandler            controllers.HomeController.registrationHandler
+
+POST    /loginHandler               controllers.HomeController.loginHandler

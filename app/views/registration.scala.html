@@ -35,7 +35,7 @@
 
 
                         <div id="register" class="animate form">
-                            <form  action="RegistrationHandler" autocomplete="on" method="post">
+                            <form  action="registerHandler" autocomplete="on" method="post">
                                 <h1> Форма для вводу персональних даних </h1>
                                 <p> 
                                     <label for="usernamesignup" class="uname" data-icon="u">Ваше призвіще</label>
@@ -46,7 +46,7 @@
                                     <input id="usernamesignup" name="name" required="required" type="text" placeholder="Іван" />
                                 </p>
                                 <p>
-                                    <label for="emailsignup" class="youmail" > Факультет, на який ви хочете вступити <br/> </label>
+                                    <label for="emailsignup" class="youmail"> Факультет, на який ви хочете вступити <br/> </label>
                                     <select id="emailsignup" name="facultee" required="required" type="email" placeholder="124">
                                         @for(fcl <- fclts) {
                                             <option value=@fcl.id>@fcl.name</option>
@@ -54,7 +54,7 @@
                                     </select>
                                 </p>
                                 <p>
-                                    <label for="emailsignup" class="youmail" > Бал ЗНО з української мови</label>
+                                    <label for="emailsignup" class="youmail"> Бал ЗНО з української мови</label>
                                     <input id="emailsignup" name="zno_ukr" required="required" type="number" placeholder="124"/>
                                 </p>
                                 <p>

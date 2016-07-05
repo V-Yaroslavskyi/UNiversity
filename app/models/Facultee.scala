@@ -22,6 +22,12 @@ class Facultees(tag: Tag) extends Table[Facultee](tag, "facultees") {
 }
 
 object Facultees{
+    def getFaculteeName(facultee_id: Int): Option[Facultee] =
+        Database.forConfig("mydb") withSession { implicit session =>
+            facultees.filter(_.id === facultee_id).firstOption
+        }
+
+
     val facultees = TableQuery[Facultees]
 
     def getAll: List[Facultee] = {
