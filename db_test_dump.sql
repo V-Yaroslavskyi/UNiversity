@@ -34,6 +34,40 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
+-- Name: admin; Type: TABLE; Schema: public; Owner: admin
+--
+
+CREATE TABLE admin (
+    id integer NOT NULL,
+    login character varying(50) NOT NULL,
+    password character varying(50) NOT NULL
+);
+
+
+ALTER TABLE admin OWNER TO admin;
+
+--
+-- Name: admin_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
+--
+
+CREATE SEQUENCE admin_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE admin_id_seq OWNER TO admin;
+
+--
+-- Name: admin_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
+--
+
+ALTER SEQUENCE admin_id_seq OWNED BY admin.id;
+
+
+--
 -- Name: applicants; Type: TABLE; Schema: public; Owner: admin
 --
 
@@ -47,7 +81,6 @@ CREATE TABLE applicants (
     zno_3rd_points integer NOT NULL,
     attestate integer NOT NULL,
     facultee_id integer NOT NULL,
-    point_sum integer NOT NULL,
     status boolean NOT NULL,
     zno_3rd_id integer NOT NULL
 );
@@ -148,6 +181,13 @@ ALTER SEQUENCE facultees_id_seq OWNED BY facultees.id;
 -- Name: id; Type: DEFAULT; Schema: public; Owner: admin
 --
 
+ALTER TABLE ONLY admin ALTER COLUMN id SET DEFAULT nextval('admin_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: admin
+--
+
 ALTER TABLE ONLY applicants ALTER COLUMN id SET DEFAULT nextval('applicants_id_seq'::regclass);
 
 
@@ -166,10 +206,29 @@ ALTER TABLE ONLY facultees ALTER COLUMN id SET DEFAULT nextval('facultees_id_seq
 
 
 --
+-- Data for Name: admin; Type: TABLE DATA; Schema: public; Owner: admin
+--
+
+COPY admin (id, login, password) FROM stdin;
+1	admin	admin
+\.
+
+
+--
+-- Name: admin_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
+--
+
+SELECT pg_catalog.setval('admin_id_seq', 1, false);
+
+
+--
 -- Data for Name: applicants; Type: TABLE DATA; Schema: public; Owner: admin
 --
 
-COPY applicants (id, name, surname, password, zno_ukr, zno_math, zno_3rd_points, attestate, facultee_id, point_sum, status, zno_3rd_id) FROM stdin;
+COPY applicants (id, name, surname, password, zno_ukr, zno_math, zno_3rd_points, attestate, facultee_id, status, zno_3rd_id) FROM stdin;
+0	Володимир	Ярославський	йцукен	179	193	200	180	1	f	2
+1	Оксана	Косткіна	qwerty	180	193	190	190	4	f	2
+2	Олена	Косткіна	йцукен	180	193	190	190	4	f	2
 \.
 
 
@@ -177,7 +236,7 @@ COPY applicants (id, name, surname, password, zno_ukr, zno_math, zno_3rd_points,
 -- Name: applicants_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
 --
 
-SELECT pg_catalog.setval('applicants_id_seq', 1, false);
+SELECT pg_catalog.setval('applicants_id_seq', 2, true);
 
 
 --
@@ -217,6 +276,14 @@ SELECT pg_catalog.setval('facultees_id_seq', 1, false);
 
 
 --
+-- Name: admin_pkey; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY admin
+    ADD CONSTRAINT admin_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: applicants_id_pk; Type: CONSTRAINT; Schema: public; Owner: admin
 --
 
@@ -248,19 +315,10 @@ CREATE UNIQUE INDEX "Applicants_id_uindex" ON applicants USING btree (id);
 
 
 --
--- Name: fk_facultee; Type: FK CONSTRAINT; Schema: public; Owner: admin
+-- Name: admin_login_uindex; Type: INDEX; Schema: public; Owner: admin
 --
 
-ALTER TABLE ONLY applicants
-    ADD CONSTRAINT fk_facultee FOREIGN KEY (facultee_id) REFERENCES facultees(id) ON DELETE CASCADE;
-
-
---
--- Name: fk_zno; Type: FK CONSTRAINT; Schema: public; Owner: admin
---
-
-ALTER TABLE ONLY applicants
-    ADD CONSTRAINT fk_zno FOREIGN KEY (zno_3rd_id) REFERENCES disciplines(id) ON DELETE CASCADE;
+CREATE UNIQUE INDEX admin_login_uindex ON admin USING btree (login);
 
 
 --
