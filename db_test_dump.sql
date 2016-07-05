@@ -222,30 +222,19 @@ SELECT pg_catalog.setval('admin_id_seq', 1, false);
 
 
 --
--- Data for Name: applicants; Type: TABLE DATA; Schema: public; Owner: admin
---
-
-COPY applicants (id, name, surname, password, zno_ukr, zno_math, zno_3rd_points, attestate, facultee_id, status, zno_3rd_id) FROM stdin;
-0	Володимир	Ярославський	йцукен	179	193	200	180	1	f	2
-1	Оксана	Косткіна	qwerty	180	193	190	190	4	f	2
-2	Олена	Косткіна	йцукен	180	193	190	190	4	f	2
-\.
-
-
---
 -- Name: applicants_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
 --
 
 SELECT pg_catalog.setval('applicants_id_seq', 2, true);
 
 
---
--- Data for Name: disciplines; Type: TABLE DATA; Schema: public; Owner: admin
+-
+--- Data for Name: disciplines; Type: TABLE DATA; Schema: public; Owner: admin
 --
 
 COPY disciplines (id, name) FROM stdin;
-1	Англійська мова
-2	Фізика
+1	пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
+2	ФіпїЅпїЅпїЅпїЅ
 \.
 
 
@@ -261,10 +250,10 @@ SELECT pg_catalog.setval('disciplines_id_seq', 1, false);
 --
 
 COPY facultees (id, name, quote, zno_3rd_id) FROM stdin;
-1	Скала-розробний факультет	10	2
-2	Верстальний факультет	5	1
-3	Інститут прикладного системного адміністрування	3	1
-4	Джаваскріпто-інженерний факультет	4	2
+1	пїЅпїЅпїЅпїЅпїЅ-пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ	10	2
+2	пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ	5	1
+3	пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ	3	1
+4	пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ-пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ	4	2
 \.
 
 
@@ -330,12 +319,12 @@ ALTER TABLE ONLY facultees
 
 
 --
--- Name: public; Type: ACL; Schema: -; Owner: Владимир
+-- Name: public; Type: ACL; Schema: -; Owner: пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 --
 
 REVOKE ALL ON SCHEMA public FROM PUBLIC;
-REVOKE ALL ON SCHEMA public FROM "Владимир";
-GRANT ALL ON SCHEMA public TO "Владимир";
+REVOKE ALL ON SCHEMA public FROM "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ";
+GRANT ALL ON SCHEMA public TO "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ";
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
