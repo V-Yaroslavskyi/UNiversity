@@ -4,7 +4,7 @@ import javax.inject._
 
 import play.api.mvc._
 import models._
-
+// async handling response inject session config db
 
 @Singleton
 class HomeController @Inject() extends Controller {
@@ -43,8 +43,20 @@ class HomeController @Inject() extends Controller {
     }
 
     def login = Action {
-
-        Ok(views.html.login())
+        implicit request => {
+            val name = request.session.get("name")
+            val surname = request.session.get("surname")
+            val pw = request.session.get("password")
+            if (name.isDefined && surname.isDefined && pw.isDefined) {
+                val user = Applicants.findApplicant(UserData(name.get, surname.get, pw.get))
+                if (user.isDefined)
+                    Ok(views.html.privatepage(user.get, Facultees.getFaculteeName(user.get.facultee_id).get))
+                else
+                    Ok(views.html.login())
+            }
+            else
+                Ok(views.html.login())
+        }
     }
     def register = Action {
 
@@ -55,17 +67,16 @@ class HomeController @Inject() extends Controller {
         implicit request =>
         userForm.form.bindFromRequest.fold(
             formWithErrors => {
-
                 BadRequest(views.html.error("formWithErrors"))
             },
             userData => {
                 val user = Applicants.findApplicant(userData)
                 if (user.isEmpty){
-                    println(user)
                     Ok(views.html.error("Користувача з таким іменем/паролем не існує"))
                 }
                 else{
                     Ok(views.html.privatepage(user.get, Facultees.getFaculteeName(user.get.facultee_id).get))
+                        .withSession("surname" -> userData.surname, "name" -> userData.name, "password" -> userData.password)
                 }
             }
         )
