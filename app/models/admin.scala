@@ -39,7 +39,7 @@ class Admins(tag: Tag) extends Table[Admin](tag, "admin") {
 object Admins{
 
     val admins = TableQuery[Admins]
-
+// inject
     def findApplicant(userData: adminData): Option[Admin] ={
 
         Database.forConfig("mydb") withSession { implicit session =>
