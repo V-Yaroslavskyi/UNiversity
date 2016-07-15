@@ -1,7 +1,6 @@
 package models
 
-import play.api.Play.current
-import play.api.db.DB
+
 import play.api.data.Forms._
 import play.api.data.Form
 

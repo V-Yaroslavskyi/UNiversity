@@ -1,6 +1,5 @@
 package models
 
-import java.util.UUID
 import slick.driver.PostgresDriver.simple._
 
 case class Facultee(id: Int, name: String, quote:Int, zno_3rd_id:Int)
